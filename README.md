@@ -24,7 +24,7 @@ http://localhost:8081
 
 ## How it works
 
-When the Spring Boot application starts, a deployment is automatically created and deplyed based on the `src/main/resources/META-INF/processes.xml` file. 
+When the Spring Boot application starts, a deployment is automatically created and deployed based on the `src/main/resources/META-INF/processes.xml` file. 
 
 The default deployment contains the following 3 resources: 
 
@@ -40,11 +40,17 @@ embedded:/forms/formio.html?deployment=forms/StartForm.json&var=submission&trans
 
 Open Tasklist and try to start a new instance of the `Form io Example` Process.
 
-Tasklist loads `formio.html`. The custom code in the `<script cam-script>` runs and loads the form specified by the `deployment` parameter from the embedded form url above.
+Tasklist loads `formio.html` which contains custom code in a `<script cam-script>` tag. This code loads the `forms/StartForm.json` file and then uses the `form.io` js library to display the form. 
 
 ![Start Form](./screenshots/startForm.png?raw=true "Start Form")
 
-NOTE: the form should currently display, however there is an error submitting the form. This is a work in progress. 
+NOTE: the form should currently display, however there is an error submitting the form. This is a work in progress.
+
+## Create and/or update Forms
+
+This project also includes a page to generate json for new forms. Or, copy existing schema json to update existing forms: 
+
+http://localhost:8081/forms/builder.html
 
 ## Use as Part of Demo (WIP)
 
