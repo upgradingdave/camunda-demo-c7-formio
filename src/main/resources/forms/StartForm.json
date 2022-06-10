@@ -1,0 +1,48 @@
+{
+  "components": [
+    {
+      "label": "To",
+      "tableView": true,
+      "key": "to",
+      "type": "email",
+      "input": true,
+      "validate": {
+        "required": true
+      },
+      "keyModified": true
+    },
+    {
+      "label": "Subject",
+      "tableView": true,
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "key": "subject",
+      "type": "textfield",
+      "input": true
+    },
+    {
+      "label": "Email Message",
+      "autoExpand": false,
+      "tableView": true,
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 500
+      },
+      "key": "emailMessage",
+      "type": "textarea",
+      "input": true
+    },
+    {
+      "type": "button",
+      "label": "Submit",
+      "key": "submit",
+      "disableOnInvalid": true,
+      "input": true,
+      "tableView": false
+    }
+  ]
+}

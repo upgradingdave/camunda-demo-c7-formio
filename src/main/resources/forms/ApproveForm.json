@@ -1,0 +1,54 @@
+{
+  "components": [
+    {
+      "label": "Your Email Address",
+      "tableView": true,
+      "validate": {
+        "required": true
+      },
+      "key": "yourEmailAddress",
+      "type": "email",
+      "input": true
+    },
+    {
+      "label": "Select",
+      "widget": "choicesjs",
+      "placeholder": "Choose Value",
+      "tableView": true,
+      "data": {
+        "values": [
+          {
+            "label": "Approved",
+            "value": "approved"
+          },
+          {
+            "label": "Rejected",
+            "value": "rejected"
+          }
+        ]
+      },
+      "validate": {
+        "required": true
+      },
+      "key": "select",
+      "type": "select",
+      "input": true
+    },
+    {
+      "label": "Comments",
+      "autoExpand": false,
+      "tableView": true,
+      "key": "comments",
+      "type": "textarea",
+      "input": true
+    },
+    {
+      "type": "button",
+      "label": "Submit",
+      "key": "submit",
+      "disableOnInvalid": true,
+      "input": true,
+      "tableView": false
+    }
+  ]
+}
