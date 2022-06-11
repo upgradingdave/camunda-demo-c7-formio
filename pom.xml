@@ -35,7 +35,9 @@
     <dependencies>
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+            <artifactId>camunda-bpm-spring-boot-starter-webapp-ee</artifactId>
+            <!-- Uncomment to use non enterprise version -->
+            <!--<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>-->
             <version>${camunda.spring-boot.version}</version>
         </dependency>
         <dependency>

@@ -47,7 +47,7 @@ The default deployment contains the following 3 resources:
 The start form task inside the `FormioExample.bpmn` is configured to use an embedded form. The url to the embedded form looks like this: 
 
 ```
-embedded:/forms/formio.html?deployment=forms/StartForm.json&var=submission&transient=true
+embedded:/forms/formio.html?deployment=forms/StartForm.json&var=startFormData&transient=false
 ```
 
 Open Tasklist and try to start a new instance of the `Form io Example` Process.
