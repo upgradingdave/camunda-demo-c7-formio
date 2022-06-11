@@ -8,19 +8,31 @@ Concepts and code used in this project were copied from here: https://github.com
 
 This is an example of integrating http://form.io into a Camunda Spring Boot Starter project.
 
-Current Status: Forms are displaying, but an error is thrown when they are submitted: 
-
-![Submit Error](./screenshots/submitError.png?raw=true "Submit Error")
-
 ## Quick Start
 
 Open this project in Intellij and open `src/main/java/io/camunda/starter/MyApplication.java`.
 
 Click the green triangle to start the project
 
-Once the Spring Boot application starts, you should be able to access the Camunda 7 environment (Cockpit, Tasklist, and Admin Webapps) here: 
+> **Heads Up** -- Some versions of Java don't include Javascript Engines. If you get an error related to Scripting Engines, try using Java 8.
+
+Once the Spring Boot application starts, you should be able to access the Camunda 7 Cockpit, Tasklist, and Admin here: 
 
 http://localhost:8081
+
+Try starting starting `Form io Example` from Tasklist. You should see the `StartForm.json` rendered like this:
+
+![Start Form](./screenshots/startForm.png?raw=true "Start Form")
+
+When you submit, the form data is saved as instance variables.
+
+You should then be able to see the next User Task `Review Email Message` that renders the `ApproveForm.json` form. 
+
+![Approve Form](./screenshots/approveForm.png?raw=true "Approve Form")
+
+If you choose `Approve` the token will go to `Notify Approved`. 
+
+> **Note** -- Notify Approved Task is not implemented yet.
 
 ## How it works
 
@@ -40,11 +52,7 @@ embedded:/forms/formio.html?deployment=forms/StartForm.json&var=submission&trans
 
 Open Tasklist and try to start a new instance of the `Form io Example` Process.
 
-Tasklist loads `formio.html` which contains custom code in a `<script cam-script>` tag. This code loads the `forms/StartForm.json` file and then uses the `form.io` js library to display the form. 
-
-![Start Form](./screenshots/startForm.png?raw=true "Start Form")
-
-NOTE: the form should currently display, however there is an error submitting the form. This is a work in progress.
+Tasklist loads `formio.html` which contains custom code in a `<script cam-script>` tag. This code loads the `forms/StartForm.json` file and then uses the `form.io` js library to display the form.
 
 ## Create and/or update Forms
 

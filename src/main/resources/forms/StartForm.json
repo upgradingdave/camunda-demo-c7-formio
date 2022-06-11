@@ -1,6 +1,52 @@
 {
   "components": [
     {
+      "label": "HTML",
+      "tag": "h3",
+      "attrs": [
+        {
+          "attr": "",
+          "value": ""
+        }
+      ],
+      "content": "Example Start Form",
+      "refreshOnChange": false,
+      "key": "html2",
+      "type": "htmlelement",
+      "input": false,
+      "tableView": false
+    },
+    {
+      "label": "HTML",
+      "attrs": [
+        {
+          "attr": "",
+          "value": ""
+        }
+      ],
+      "content": "This is an example form that has been rendered using http://form.io. \n\nSee README.md for more details. ",
+      "refreshOnChange": false,
+      "key": "html",
+      "type": "htmlelement",
+      "input": false,
+      "tableView": false
+    },
+    {
+      "label": "HTML",
+      "attrs": [
+        {
+          "attr": "",
+          "value": ""
+        }
+      ],
+      "content": "This is the Start Form of a Demonstration of how you might build a Camunda \nProcess that allows people to suggest an email they'd like to send. Then, they\ncan either approve or reject the email. ",
+      "refreshOnChange": false,
+      "key": "html1",
+      "type": "htmlelement",
+      "input": false,
+      "tableView": false
+    },
+    {
       "label": "To",
       "tableView": true,
       "key": "to",

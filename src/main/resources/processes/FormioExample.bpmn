@@ -1,93 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1tocbq4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
   <bpmn:process id="Process_formio" name="Form io Example" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="Start" camunda:formKey="embedded:/forms/formio.html?deployment=forms/StartForm.json&#38;var=submission&#38;transient=true">
+    <bpmn:startEvent id="StartEvent_1" name="Start" camunda:formKey="embedded:/forms/formio.html?deployment=forms/StartForm.json&#38;var=startFormData&#38;transient=false">
+      <bpmn:extensionElements />
       <bpmn:outgoing>Flow_0gsy6v7</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0gsy6v7" sourceRef="StartEvent_1" targetRef="Activity_19h4qln" />
-    <bpmn:userTask id="Activity_19h4qln" name="Approve" camunda:formKey="embedded:/forms/formio.html?deployment=forms/ApproveForm.json&#38;var=submission&#38;transient=true">
-      <bpmn:incoming>Flow_0gsy6v7</bpmn:incoming>
+    <bpmn:sequenceFlow id="Flow_0gsy6v7" sourceRef="StartEvent_1" targetRef="Activity_0wo9q37" />
+    <bpmn:userTask id="Activity_19h4qln" name="Review Email Message" camunda:formKey="embedded:/forms/formio.html?deployment=forms/ApproveForm.json&#38;var=approveFormData&#38;transient=false">
+      <bpmn:incoming>Flow_0q8gou4</bpmn:incoming>
       <bpmn:outgoing>Flow_0eelwwu</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_1b1agl2" default="Flow_0qdkw7k">
-      <bpmn:incoming>Flow_0eelwwu</bpmn:incoming>
+      <bpmn:incoming>Flow_1v4tek8</bpmn:incoming>
       <bpmn:outgoing>Flow_181mmzj</bpmn:outgoing>
       <bpmn:outgoing>Flow_0qdkw7k</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0eelwwu" sourceRef="Activity_19h4qln" targetRef="Gateway_1b1agl2" />
+    <bpmn:sequenceFlow id="Flow_0eelwwu" sourceRef="Activity_19h4qln" targetRef="Activity_03ag73b" />
     <bpmn:sequenceFlow id="Flow_181mmzj" sourceRef="Gateway_1b1agl2" targetRef="Activity_0iab2r3">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result == 'approved'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0qdkw7k" sourceRef="Gateway_1b1agl2" targetRef="Activity_0yk83ss" />
-    <bpmn:endEvent id="Event_18h749w">
-      <bpmn:incoming>Flow_02f0nso</bpmn:incoming>
+    <bpmn:sequenceFlow id="Flow_0qdkw7k" sourceRef="Gateway_1b1agl2" targetRef="Event_18h749w" />
+    <bpmn:endEvent id="Event_18h749w" name="Message Rejected">
+      <bpmn:incoming>Flow_0qdkw7k</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_02f0nso" sourceRef="Activity_0yk83ss" targetRef="Event_18h749w" />
-    <bpmn:endEvent id="Event_0bo9lfj">
+    <bpmn:endEvent id="Event_0bo9lfj" name="Message Approved and Sent">
       <bpmn:incoming>Flow_03nw38m</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_03nw38m" sourceRef="Activity_0iab2r3" targetRef="Event_0bo9lfj" />
-    <bpmn:sendTask id="Activity_0iab2r3" name="Notify Approved" camunda:type="external" camunda:topic="notify-approve">
+    <bpmn:sendTask id="Activity_0iab2r3" name="Notify Approved" camunda:type="external" camunda:topic="send-email">
       <bpmn:incoming>Flow_181mmzj</bpmn:incoming>
       <bpmn:outgoing>Flow_03nw38m</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sendTask id="Activity_0yk83ss" name="Notified Rejected" camunda:type="external" camunda:topic="notify-reject">
-      <bpmn:incoming>Flow_0qdkw7k</bpmn:incoming>
-      <bpmn:outgoing>Flow_02f0nso</bpmn:outgoing>
-    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_0q8gou4" sourceRef="Activity_0wo9q37" targetRef="Activity_19h4qln" />
+    <bpmn:scriptTask id="Activity_0wo9q37" name="Initialize Variables" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0gsy6v7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q8gou4</bpmn:outgoing>
+      <bpmn:script>var email = startFormData.prop("data").prop("to").stringValue();
+execution.setVariable("email", email);
+var subject = startFormData.prop("data").prop("subject").stringValue();
+execution.setVariable("subject", subject);
+var message = startFormData.prop("data").prop("emailMessage").stringValue();
+execution.setVariable("message", message);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_03ag73b" name="Set Approval Result" scriptFormat="javascript">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0eelwwu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v4tek8</bpmn:outgoing>
+      <bpmn:script>var result = approveFormData.prop("data").prop("select").stringValue();
+execution.setVariable("result", result);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1v4tek8" sourceRef="Activity_03ag73b" targetRef="Gateway_1b1agl2" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_formio">
       <bpmndi:BPMNEdge id="Flow_0gsy6v7_di" bpmnElement="Flow_0gsy6v7">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+        <di:waypoint x="198" y="117" />
+        <di:waypoint x="250" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0eelwwu_di" bpmnElement="Flow_0eelwwu">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="425" y="117" />
+        <di:waypoint x="500" y="120" />
+        <di:waypoint x="550" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_181mmzj_di" bpmnElement="Flow_181mmzj">
-        <di:waypoint x="475" y="117" />
-        <di:waypoint x="530" y="117" />
+        <di:waypoint x="745" y="120" />
+        <di:waypoint x="800" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0qdkw7k_di" bpmnElement="Flow_0qdkw7k">
-        <di:waypoint x="450" y="142" />
-        <di:waypoint x="450" y="230" />
-        <di:waypoint x="530" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_02f0nso_di" bpmnElement="Flow_02f0nso">
-        <di:waypoint x="630" y="230" />
-        <di:waypoint x="692" y="230" />
+        <di:waypoint x="720" y="145" />
+        <di:waypoint x="720" y="212" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_03nw38m_di" bpmnElement="Flow_03nw38m">
-        <di:waypoint x="630" y="117" />
-        <di:waypoint x="692" y="117" />
+        <di:waypoint x="900" y="120" />
+        <di:waypoint x="962" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q8gou4_di" bpmnElement="Flow_0q8gou4">
+        <di:waypoint x="350" y="117" />
+        <di:waypoint x="400" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v4tek8_di" bpmnElement="Flow_1v4tek8">
+        <di:waypoint x="650" y="120" />
+        <di:waypoint x="695" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <dc:Bounds x="162" y="99" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="186" y="142" width="24" height="14" />
+          <dc:Bounds x="169" y="142" width="24" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ajl3jn_di" bpmnElement="Activity_0wo9q37">
+        <dc:Bounds x="250" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_03c2qje_di" bpmnElement="Activity_19h4qln">
-        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <dc:Bounds x="400" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02stpln_di" bpmnElement="Activity_03ag73b">
+        <dc:Bounds x="550" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1b1agl2_di" bpmnElement="Gateway_1b1agl2" isMarkerVisible="true">
-        <dc:Bounds x="425" y="92" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_18h749w_di" bpmnElement="Event_18h749w">
-        <dc:Bounds x="692" y="212" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0bo9lfj_di" bpmnElement="Event_0bo9lfj">
-        <dc:Bounds x="692" y="99" width="36" height="36" />
+        <dc:Bounds x="695" y="95" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_12kgf0u_di" bpmnElement="Activity_0iab2r3">
-        <dc:Bounds x="530" y="77" width="100" height="80" />
+        <dc:Bounds x="800" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_07406bl_di" bpmnElement="Activity_0yk83ss">
-        <dc:Bounds x="530" y="190" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+      <bpmndi:BPMNShape id="Event_0bo9lfj_di" bpmnElement="Event_0bo9lfj">
+        <dc:Bounds x="962" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="946" y="145" width="69" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18h749w_di" bpmnElement="Event_18h749w">
+        <dc:Bounds x="702" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="698" y="255" width="45" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
