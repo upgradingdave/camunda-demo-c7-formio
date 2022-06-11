@@ -1,16 +1,6 @@
 {
   "components": [
     {
-      "label": "Your Email Address",
-      "tableView": true,
-      "validate": {
-        "required": true
-      },
-      "key": "yourEmailAddress",
-      "type": "email",
-      "input": true
-    },
-    {
       "label": "Select",
       "widget": "choicesjs",
       "placeholder": "Choose Value",
