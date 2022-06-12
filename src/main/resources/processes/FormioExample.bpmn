@@ -35,12 +35,12 @@
     <bpmn:scriptTask id="Activity_0wo9q37" name="Initialize Variables" scriptFormat="javascript">
       <bpmn:incoming>Flow_0gsy6v7</bpmn:incoming>
       <bpmn:outgoing>Flow_0q8gou4</bpmn:outgoing>
-      <bpmn:script>var email = startFormData.prop("data").prop("to").stringValue();
-execution.setVariable("email", email);
-var subject = startFormData.prop("data").prop("subject").stringValue();
-execution.setVariable("subject", subject);
-var message = startFormData.prop("data").prop("emailMessage").stringValue();
-execution.setVariable("message", message);</bpmn:script>
+      <bpmn:script>var emailTo = startFormData.prop("data").prop("to").stringValue();
+execution.setVariable("emailTo", emailTo);
+var emailSubject = startFormData.prop("data").prop("subject").stringValue();
+execution.setVariable("emailSubject", emailSubject);
+var emailText = startFormData.prop("data").prop("emailMessage").stringValue();
+execution.setVariable("emailText", emailText);</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:scriptTask id="Activity_03ag73b" name="Set Approval Result" scriptFormat="javascript">
       <bpmn:extensionElements />
