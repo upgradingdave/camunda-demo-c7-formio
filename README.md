@@ -39,11 +39,11 @@ docker-compose  \
 
 Once the Spring Boot application starts, you should be able to access the Camunda 7 Cockpit, Tasklist, and Admin here:
 
-http://localhost:8081
+http://localhost:8080
 
 The Camunda Rest API should be available here:
 
-http://localhost:8081/engine-rest
+http://localhost:8080/engine-rest
 
 Try starting a `Form io Example` instance from Tasklist. You should see the `StartForm.json` rendered like this:
 
@@ -63,7 +63,7 @@ http://localhost:9999
 
 To create a new http://form.io form or update an existing form, browse here:
 
-http://localhost:8081/forms/builder.html
+http://localhost:8080/forms/builder.html
 
 ## Development Mode
 
@@ -73,7 +73,7 @@ Open this project in Intellij and then open this java file: `src/main/java/io/ca
 
 Click the green triangle to start the project
 
-By default, the webapp should start on port `8081`.
+By default, the webapp should start on port `8081` when run in "development mode".
 
 > **Note** -- Some versions of Java don't include Javascript Engines. If you get an error related to Scripting Engines, try using Java 8.
 
