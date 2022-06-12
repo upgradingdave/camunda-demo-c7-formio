@@ -20,6 +20,6 @@ FROM openjdk:8-jdk as process-application
 # Create app directory
 WORKDIR /usr/src/app
 # copy the built jar to the new image
-COPY --from=builder /usr/src/app/target/camunda-demo-c7-formio.jar ${WORKDIR}
+COPY --from=builder /usr/src/app/target/camunda-demo-c7-formio-0.0.1-SNAPSHOT.jar ${WORKDIR}
 # run the application
-ENTRYPOINT ["java","-Dspring.profiles.active=${PROFILES}","-Dserver.port=${PORT}","-Djava.security.egd=file:/dev/./urandom","-jar","/usr/src/app/camunda-demo-c7-formio.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=${PROFILES}","-Dserver.port=${PORT}","-Djava.security.egd=file:/dev/./urandom","-jar","/usr/src/app/camunda-demo-c7-formio-0.0.1-SNAPSHOT.jar"]
