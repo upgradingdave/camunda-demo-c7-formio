@@ -20,6 +20,10 @@ Once the Spring Boot application starts, you should be able to access the Camund
 
 http://localhost:8081
 
+The Camunda Rest API is also available here: 
+
+http://localhost:8081/engine-rest
+
 Try starting starting `Form io Example` from Tasklist. You should see the `StartForm.json` rendered like this:
 
 ![Start Form](./screenshots/startForm.png?raw=true "Start Form")
