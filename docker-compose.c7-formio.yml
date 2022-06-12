@@ -16,9 +16,8 @@ services:
 # Camunda Platform Service
 ########################################
   camunda-7:
+    image: camunda-demo-c7-formio:latest
     container_name: camunda-7-formio
-    build:
-      context: .
     ports:
       - "8080:8080"
     volumes:
@@ -39,7 +38,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
+          cpus: '1'
           memory: 1000M
         reservations:
           memory: 1000M

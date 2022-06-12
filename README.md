@@ -82,12 +82,14 @@ This project follows the same conventions and is compatible with the
 
 ```
 docker-compose  \
-  -f ./camunda-starter-demo/docker-compose.postgres.yml \
-  -f ./camunda-starter-demo/docker-compose.data-api.yml \
-  -f ./camunda-starter-demo/docker-compose.smtp.yml \
-  -f ./docker-compose.c7-client.yml \
-  -f ./camunda-demo-c7-formio/docker-compose.c7-formio.yml \
+  -f camunda-demo-starter/docker-compose.postgres.yml \
+  -f camunda-demo-starter/docker-compose.data-api.yml \
+  -f camunda-demo-starter/docker-compose.smtp.yml \
+  -f camunda-demo-c7-formio/docker-compose.c7-formio.yml \
+  -f camunda-demo-starter/docker-compose.c7-client.yml \
   up -d --build
 ```
+
+docker-compose -f camunda-demo-starter/docker-compose.postgres.yml -f camunda-demo-c7-formio/docker-compose.c7-formio.yml up -d --build
 
 
